@@ -25,7 +25,7 @@ jobs:
     - run: |
         echo "USER=GorgoBot" >> $GITHUB_ENV
     - run: yarn ci
-    - run: yarn run
+    - run: yarn chron
       env:
         NODE_ENV: production
         USER: ${{ secrets.USER }}

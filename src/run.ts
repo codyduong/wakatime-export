@@ -67,12 +67,23 @@ const run = async (): Promise<void> => {
   });
   const sheets = google.sheets({version: 'v4', auth: auth});
 
-  await sheets.spreadsheets.values.update({
-    spreadsheetId: process.env.SHEET_ID,
-    range: range,
-    requestBody: requestBody,
-    valueInputOption: 'USER_ENTERED',
-  });
+  await sheets.spreadsheets.values
+      .update({
+        spreadsheetId: process.env.SHEET_ID,
+        range: range,
+        requestBody: requestBody,
+        valueInputOption: 'USER_ENTERED',
+      })
+      .then((): void => {
+        console.log(
+            `Wrote successfully to Row ${dayOfYear} (Day: ${date.toLocaleDateString(
+                'en-US',
+            )}) with hours recorded: ${programmingHours}`,
+        );
+      })
+      .catch((): void => {
+        console.log('Something went wrong...');
+      });
 };
 
 run();
