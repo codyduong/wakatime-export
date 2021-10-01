@@ -1,0 +1,35 @@
+name: chron
+
+on:
+  push:
+    branches: [ master ]
+  schedule:
+    - cron: '0 12 * * *'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'yarn'
+    - run: |
+        echo "USER=GorgoBot" >> $GITHUB_ENV
+    - run: yarn ci
+    - run: yarn run
+      env:
+        NODE_ENV: production
+        USER: ${{ secrets.USER }}
+        WAKATIME_API: ${{ secrets.WAKATIME_API }}
+        SHEET_ID: ${{ secrets.SHEET_ID }}
+        GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+        GOOGLE_APPLICATION_CREDENTIALS: ./secrets.json
