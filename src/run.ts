@@ -54,11 +54,16 @@ const run = async (): Promise<void> => {
 
   const requestBody = {
     majorDimension: 'ROWS',
-    values: [[date.toLocaleDateString('en-US'), programmingHours]],
+    values: [
+      [
+        date.toLocaleDateString('en-US'),
+        programmingHours,
+        JSON.stringify(data),
+      ],
+    ],
   };
-  const range = `${date.getFullYear()}!A${dayOfYear}:B${dayOfYear}`;
+  const range = `${date.getFullYear()}!A${dayOfYear}:C${dayOfYear}`;
 
-  console.log(process.env.GOOGLE_CREDENTIALS);
   const injectedJSON = process.env.GOOGLE_CREDENTIALS ?? '';
   fs.writeFileSync('./secrets.json', injectedJSON);
 
