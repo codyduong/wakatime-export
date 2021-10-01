@@ -22,8 +22,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
-    - run: |
-        echo "USER=GorgoBot" >> $GITHUB_ENV
     - run: yarn ci
     - run: yarn chron
       env:
