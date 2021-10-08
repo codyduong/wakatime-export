@@ -3,6 +3,8 @@ name: compile
 on:
   workflow_run:
     workflows: ["lint"]
+    types:
+      - completed
 
 jobs:
   build:
