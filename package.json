@@ -7,14 +7,14 @@
     "postinstall": "git rev-parse --git-dir && git config core.hooksPath ./git-hooks || exit 0",
     "ci": "yarn install --frozen-lockfile",
     "lint": "prettier-eslint --write \"./{src, test}/**/*{ts, tsx}\"",
-    "chron": "ts-node ./src/run.ts"
+    "dev": "ts-node ./src/run.ts",
+    "build": "tsc ./src/run.ts --outDir ./lib/",
+    "chron": "node ./lib/run.js"
   },
   "dependencies": {
     "dotenv": "^10.0.0",
     "googleapis": "^88.2.0",
-    "got": "^11.8.2",
-    "prettier-eslint-cli": "^5.0.1",
-    "ts-node": "^10.2.1"
+    "got": "^11.8.2"
   },
   "devDependencies": {
     "@types/node": "^16.10.2",
@@ -24,6 +24,8 @@
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-prettier": "^4.0.0",
     "prettier": "^2.4.1",
-    "typescript": "^4.4.3"
+    "typescript": "^4.4.3",
+    "ts-node": "^10.2.1",
+    "prettier-eslint-cli": "^5.0.1"
   }
 }

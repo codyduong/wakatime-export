@@ -1,0 +1,32 @@
+name: compile
+
+on:
+  workflow_run:
+    workflows: ["lint"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+          token: ${{ secrets.PAT }}
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'yarn'
+    - run: yarn ci
+    - run: yarn 
+    - name: Commit report
+      run: |
+        git config --global user.name 'Cody Duong'
+        git config --global user.email 'codyduong@users.noreply.github.com'
+        git checkout branch "build"
+        git commit -am "Automated Build"
+        git push
