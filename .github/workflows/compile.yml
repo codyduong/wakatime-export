@@ -23,10 +23,13 @@ jobs:
         cache: 'yarn'
     - run: yarn ci
     - run: yarn 
-    - name: Commit report
+    - uses: actions/checkout@v2
+      with: 
+        ref: build
+        token: ${{ secrets.PAT }}
+    - name: Commit build
       run: |
         git config --global user.name 'Cody Duong'
         git config --global user.email 'codyduong@users.noreply.github.com'
-        git checkout -b "build" "origin/build"
         git commit -am "Automated Build"
         git push
