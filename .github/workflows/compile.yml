@@ -27,6 +27,6 @@ jobs:
       run: |
         git config --global user.name 'Cody Duong'
         git config --global user.email 'codyduong@users.noreply.github.com'
-        git checkout branch "build"
+        git checkout "build"
         git commit -am "Automated Build"
         git push
